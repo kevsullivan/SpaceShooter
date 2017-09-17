@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour {
 
-    private AudioSource audioSource;
+    public AudioClip audioClip;
 
     public GameObject shot;
     // Using transform over game object for shotspwan to avoid code calls like `shotSpawn.transform.position`
@@ -15,8 +15,6 @@ public class WeaponController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        audioSource = GetComponent<AudioSource>();
-
         // Invokes the method methodName in time seconds, then repeatedly every repeatRate seconds.
         // TODO: Maybe add smarter fireRate (realism :S) -> could do random range
         InvokeRepeating("Fire", delay, fireRate);
@@ -25,6 +23,6 @@ public class WeaponController : MonoBehaviour {
     void Fire()
     {
         Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-        audioSource.Play();
+        SoundManager.instance.PlaySingle(audioClip);
     }
 }
