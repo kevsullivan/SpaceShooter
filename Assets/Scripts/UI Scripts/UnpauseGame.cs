@@ -5,24 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class UnpauseGame : MonoBehaviour
 {
-
-    private GameController gameController;
-
-    private void Start()
-    {
-        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        if (gameControllerObject != null)
-        {
-            gameController = gameControllerObject.GetComponent<GameController>();
-        }
-        else
-        {
-            Debug.Log("Cannot find 'GameController' script");
-        }
-    }
-
+    // Used for unpausing from menu resume game button click
     public void Unpause()
     {
-        gameController.ContinueGame();
+        GameManager.instance.ContinueGame();
     }
 }

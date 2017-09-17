@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameScripts\ActiveStateToggler.cs" />
     <Compile Include="Assets\Scripts\GameScripts\ApplicationManager.cs" />
     <Compile Include="Assets\Scripts\GameScripts\BGScroller.cs" />
@@ -108,11 +109,14 @@
     <Compile Include="Assets\Scripts\GameScripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Scripts\GameScripts\TiltWindow.cs" />
     <Compile Include="Assets\Scripts\GameScripts\WeaponController.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\EffectsVolumeControl.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\ExitOnClick.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\LoadSceneOnClick.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\MasterVolumeControl.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\MusicVolumeControl.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\SelectOnInput.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\UnpauseGame.cs" />
-    <Compile Include="Assets\VolumeControl.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_BGScroller.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByBoundary.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByContact.cs" />

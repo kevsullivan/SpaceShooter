@@ -24,9 +24,10 @@ public class GameController : MonoBehaviour {
     private int score;
 
     // Menu to display on pause
-    public GameObject gameMenu;
+    private GameObject mainMenu;
+    //public GameObject gameMenu;
 
-    private bool gameOver, restart, paused;
+    private bool gameOver, restart;
     
     private void Start()
     {
@@ -44,14 +45,7 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!paused)
-            {
-                PauseGame();
-            }
-            else
-            {
-                ContinueGame();
-            }
+            GameManager.instance.HandleMenu();
         }
 
         if (restart)
@@ -62,31 +56,6 @@ public class GameController : MonoBehaviour {
                 SceneManager.LoadScene("SpaceShooter");
             }
         }
-    }
-
-    public void PauseGame()
-    {
-        // Insurance (only pause game if not already paused)
-        if (paused)
-        {
-            return;
-        }
-        Time.timeScale = 0;
-        gameMenu.SetActive(true);
-        paused = true;
-        //Disable scripts that still work while timescale is set to 0
-    }
-    public void ContinueGame()
-    {
-        // Insurance (only unpause/continue if already paused
-        if (!paused)
-        {
-            return;
-        }
-        Time.timeScale = 1;
-        gameMenu.SetActive(false);
-        paused = false;
-        //enable the scripts again
     }
 
     // Co-routine function for spawning waves of "hazard" (Asteroids)

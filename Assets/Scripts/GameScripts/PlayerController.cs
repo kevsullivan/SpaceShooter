@@ -11,7 +11,6 @@ public class Boundary
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
-    private AudioSource audioSource;
     public float speed;
     public float tilt;
     public Boundary boundary;
@@ -22,10 +21,11 @@ public class PlayerController : MonoBehaviour {
     public float fireDelta;
     private float nextFire = 0.5F;
 
+    public AudioClip fireSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     // Executed before updated the frame, every frame
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
         {
             nextFire = Time.time + fireDelta;
             Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
-            audioSource.Play();
+            SoundManager.instance.PlaySingle(fireSound);
         }
     }
 
