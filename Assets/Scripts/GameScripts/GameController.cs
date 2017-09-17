@@ -66,6 +66,11 @@ public class GameController : MonoBehaviour {
 
     public void PauseGame()
     {
+        // Insurance (only pause game if not already paused)
+        if (paused)
+        {
+            return;
+        }
         Time.timeScale = 0;
         gameMenu.SetActive(true);
         paused = true;
@@ -73,6 +78,11 @@ public class GameController : MonoBehaviour {
     }
     public void ContinueGame()
     {
+        // Insurance (only unpause/continue if already paused
+        if (!paused)
+        {
+            return;
+        }
         Time.timeScale = 1;
         gameMenu.SetActive(false);
         paused = false;

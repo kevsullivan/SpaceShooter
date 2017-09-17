@@ -21,10 +21,8 @@ public class UnpauseGame : MonoBehaviour
         }
     }
 
-    // Should only be attached as component when game is paused (Time.timeScale == 0)
     public void Unpause()
     {
-        Time.timeScale = 1;
         gameController.ContinueGame();
     }
 }

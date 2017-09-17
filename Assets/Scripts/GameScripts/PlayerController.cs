@@ -31,7 +31,12 @@ public class PlayerController : MonoBehaviour {
     // Executed before updated the frame, every frame
     private void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        // Only shoot if:
+        // 1) The fire button is pressed
+        // 2) Enough time has elapsed since last shot fired
+        // 3) Time.timescale isn't 0 (i.e the game is not paused)
+        // TODO: Time.timescale is GameController Logic - perhaps could pull paused info from there
+        if (Input.GetButton("Fire1") && Time.time > nextFire && Time.timeScale != 0)
         {
             nextFire = Time.time + fireDelta;
             Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
