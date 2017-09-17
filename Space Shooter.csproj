@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\ExitOnClick.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\LoadSceneOnClick.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\SelectOnInput.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\UnpauseGame.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_BGScroller.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByBoundary.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByContact.cs" />

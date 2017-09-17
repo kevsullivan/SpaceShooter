@@ -23,6 +23,9 @@ public class GameController : MonoBehaviour {
     public GUIText gameOverText;
     private int score;
 
+    // Menu to display on pause
+    public GameObject gameMenu;
+
     private bool gameOver, restart, paused;
     
     private void Start()
@@ -41,7 +44,6 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log(string.Format("Hit Escape {0}", paused));
             if (!paused)
             {
                 PauseGame();
@@ -62,17 +64,17 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
-        Debug.Log("PAUSING");
         Time.timeScale = 0;
+        gameMenu.SetActive(true);
         paused = true;
         //Disable scripts that still work while timescale is set to 0
     }
-    private void ContinueGame()
+    public void ContinueGame()
     {
-        Debug.Log("UN-PAUSING");
         Time.timeScale = 1;
+        gameMenu.SetActive(false);
         paused = false;
         //enable the scripts again
     }
@@ -83,8 +85,7 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(startWait);
         // Game is an infinite runner (keep spawning till dead)
         while(true){
-
-            Debug.Log("Spawning Waves");
+            
             for (int i = 0; i < hazardCount; i++)
             {
                 // Get random hazard from list of hazards
