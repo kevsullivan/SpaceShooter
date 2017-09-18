@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneOnClick : MonoBehaviour {
 
+    // Standard Load scene by index passed from unity
     public void LoadByIndex(int sceneIndex)
     {
+        GameManager.instance.UpdateLives();
+        GameManager.instance.UpdateScore();
         SceneManager.LoadScene(sceneIndex);
     }
 
+    // Loads scene by index passed from Unity but handles logic specific to being in
+    // a paused game context (turning off menu etc.)
     public void LoadByIndexPaused(int sceneIndex)
     {
         // Load scene can be returning from game to main menu in which case the game is in a paused state

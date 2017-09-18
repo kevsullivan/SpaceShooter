@@ -18,26 +18,11 @@ public class GameController : MonoBehaviour {
     // TODO: Can implement edits on wave behviour on each wave wait so next wave has increased difficulty
     public float waveWait;
 
-    public GUIText scoreText;
-    public GUIText restartText;
-    public GUIText gameOverText;
-    private int score;
-
     // Menu to display on pause
     private GameObject mainMenu;
-    //public GameObject gameMenu;
-
-    private bool gameOver, restart;
     
     private void Start()
     {
-        gameOver = false;
-        restart = false;
-        restartText.text = "";
-        gameOverText.text = "";
-        // TODO: Confirm need for instantiating int value (does it not default to 0?)
-        score = 0;
-        UpdateScore();
         StartCoroutine(SpawnWaves());
     }
 
@@ -48,12 +33,11 @@ public class GameController : MonoBehaviour {
             GameManager.instance.HandleMenu();
         }
 
-        if (restart)
+        if (GameManager.instance.restart)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
-                SceneManager.LoadScene("SpaceShooter");
+                StartCoroutine(GameManager.instance.RestartLevel());
             }
         }
     }
@@ -79,30 +63,13 @@ public class GameController : MonoBehaviour {
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
-            if (gameOver)
+            if (GameManager.instance.gameOver)
             {
-                restartText.text = "Press 'R' to restart";
-                restart = true;
+                GameManager.instance.AllowRestart();
                 break;
             }
         }
 
     }
 
-    public void AddScore(int newScoreValue)
-    {
-        score += newScoreValue;
-        UpdateScore();
-    }
-
-    void UpdateScore()
-    {
-        scoreText.text = "Score: " + score;
-    }
-
-    public void GameOver()
-    {
-        gameOverText.text = "Game Over!";
-        gameOver = true;
-    }
 }

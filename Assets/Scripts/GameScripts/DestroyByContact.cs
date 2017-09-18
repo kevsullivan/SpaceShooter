@@ -7,21 +7,7 @@ public class DestroyByContact : MonoBehaviour {
     public GameObject explosion;
     public GameObject playerExplosion;
     public int scoreValue;
-    private GameController gameController;
     
-
-    private void Start()
-    {
-        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        if (gameControllerObject != null)
-        {
-            gameController = gameControllerObject.GetComponent<GameController>();
-        }
-        else
-        {
-            Debug.Log("Cannot find 'GameController' script");
-        }
-    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Boundary") || other.CompareTag("Enemy"))
@@ -39,11 +25,11 @@ public class DestroyByContact : MonoBehaviour {
         if (other.tag == "Player")
         {
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-            gameController.GameOver();
+            GameManager.instance.PlayerKilled();
         }
             
-
-        gameController.AddScore(scoreValue);
+        // TODO: Player gets score if killed by object (do I want this mechanic?)
+        GameManager.instance.AddScore(scoreValue);
         // Destroy what hit the game object
         Destroy(other.gameObject);
         // Destroy the game object itself (script attached to obstacles)

@@ -2,13 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public GameObject mainMenu;
     public static GameManager instance = null;
 
-    private bool paused;
+    // Game status bools
+    public bool paused, gameOver, restart;
+
+    public int startLives;
+
+    // Cross Game GUI Options
+    public GUIText scoreText;
+    public GUIText restartText;
+    public GUIText gameOverText;
+    public GUIText livesText;
+    private string gameOverMessage = "Game Over!";
+
+    // Player attributes
+    private int lives;
+    private int score;
+
+    // Making public to test spawn time;
+    public float waitOnRespawn;
 
     // Use this for initialization
     void Awake()
@@ -28,6 +46,24 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    public void Start()
+    {
+        // TODO: Confirm need for instantiating int value (does it not default to 0?)
+        SetDefaults();
+    }
+
+    public void SetDefaults()
+    {
+        score = 0;
+        lives = startLives;
+        gameOver = false;
+        restart = false;
+        restartText.text = "";
+        gameOverText.text = "";
+        livesText.text = "";
+        scoreText.text = "";
+    }
+
     public void HandleMenu()
     {
         if (paused)
@@ -40,11 +76,33 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
+    }
+
+    public void UpdateLives()
+    {
+        livesText.text = "Lives: " + lives;
+    }
+
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+        UpdateScore();
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0;
         mainMenu.SetActive(true);
         paused = true;
+        if (gameOver)
+        {
+            // Little bit of logic to clean up UI when
+            // open menu and "Game Over!" message is on screen
+            gameOverText.text = "";
+        }
         //Disable scripts that still work while timescale is set to 0
     }
 
@@ -53,6 +111,12 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1;
         mainMenu.SetActive(false);
         paused = false;
+        if (gameOver)
+        {
+            // If game is over, redisplay the game over text when closing
+            // menu.
+            gameOverText.text = gameOverMessage;
+        }
         //enable the scripts again
     }
 
@@ -60,6 +124,57 @@ public class GameManager : MonoBehaviour {
     {
         Time.timeScale = 1;
         paused = false;
+        // Going back to start screen so don't need GUI text / player attributes etc.
+        SetDefaults();
         //enable the scripts again
+    }
+
+    public void PlayerKilled()
+    {
+        // Check players amount of lives to decided on ending game or restarting level.
+        if (lives == 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            lives -= 1;
+            UpdateLives();
+            // TODO: This should be smart enough to restart the current loaded scene
+            StartCoroutine(RestartLevel());
+        }
+    }
+
+    public void AllowRestart()
+    {
+        restartText.text = "Press 'R' to restart";
+        restart = true;
+    }
+
+    public IEnumerator RestartLevel()
+    {
+        // When restarting from gameOver context - need to reset attributes/gui text etc.
+        if (gameOver)
+        {
+            SetDefaults();
+            UpdateLives();
+            UpdateScore();
+        }
+        else
+        {
+            // If restarting on Death (automatic) wait a few seconds
+            yield return new WaitForSeconds(waitOnRespawn);
+        }
+        // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
+        SceneManager.LoadScene("SpaceShooter");
+    }
+
+    public void GameOver()
+    {
+        // Function to handle logic on game end
+        // Rest player attributes for new Games
+        // TODO: Track score into leaderboard (get player names needs to be done)
+        gameOverText.text = gameOverMessage;
+        gameOver = true;
     }
 }
