@@ -21,11 +21,12 @@ public class PlayerController : MonoBehaviour {
     public float fireDelta;
     private float nextFire = 0.5F;
 
-    public AudioClip fireSound;
+    private AudioSource audioSource;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Executed before updated the frame, every frame
@@ -40,7 +41,8 @@ public class PlayerController : MonoBehaviour {
         {
             nextFire = Time.time + fireDelta;
             Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
-            SoundManager.instance.PlaySingle(fireSound);
+            // Pass reference to sound manager to play our sound effect
+            SoundManager.instance.PlayEffects(audioSource);
         }
     }
 

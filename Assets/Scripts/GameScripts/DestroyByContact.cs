@@ -8,8 +8,7 @@ public class DestroyByContact : MonoBehaviour {
     public GameObject playerExplosion;
     public int scoreValue;
     private GameController gameController;
-
-    public AudioClip playerExplosionClip, hazardExplosionClip;
+    
 
     private void Start()
     {
@@ -33,14 +32,12 @@ public class DestroyByContact : MonoBehaviour {
 
         if (explosion != null)
         {
-            SoundManager.instance.PlaySingle(hazardExplosionClip);
             Instantiate(explosion, transform.position, transform.rotation);
         }
 
         // Special player explosion if colliding with player not bullet
         if (other.tag == "Player")
         {
-            SoundManager.instance.PlaySingle(playerExplosionClip);
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
             gameController.GameOver();
         }

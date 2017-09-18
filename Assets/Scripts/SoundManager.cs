@@ -35,10 +35,10 @@ public class SoundManager : MonoBehaviour {
     }
 
     // Play a determined sound clip
-    public void PlaySingle(AudioClip clip)
+    public void PlayEffects(AudioSource audioSource)
     {
-        efxSource.clip = clip;
-        efxSource.Play();
+        audioSource.volume = efxSource.volume;
+        audioSource.Play();
     }
 	
     // Extensibility function (allows for ranomizing of sound clips played on triggers)
