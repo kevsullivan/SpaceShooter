@@ -139,6 +139,18 @@
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>Library\FacebookSDK\Facebook.Unity.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="GameSparks">
+      <HintPath>Assets\GameSparks\Plugins\GameSparks.dll</HintPath>
+    </Reference>
+    <Reference Include="GameSparksRT">
+      <HintPath>Assets\GameSparks\Plugins\GameSparksRT.dll</HintPath>
+    </Reference>
+    <Reference Include="GameSparks.Api">
+      <HintPath>Assets\GameSparks\Plugins\GameSparks.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle_GameSparks">
+      <HintPath>Assets\GameSparks\Plugins\BouncyCastle_GameSparks.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Space Shooter.csproj">
@@ -147,7 +159,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksEditorFormUpload.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksPopUp.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksRestApi.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksRestWindow.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksSettingsEditor.cs" />
+    <Compile Include="Assets\GameSparks\Editor\GameSparksUnityInspector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\GameSparks\Plugins\GameSparks.Api.XML" />
+    <None Include="Assets\GameSparks\Plugins\GameSparks.XML" />
+    <None Include="Assets\GameSparks\Plugins\GameSparksRT.xml" />
+    <None Include="Assets\GameSparks\Plugins\Metro\GameSparks.XML" />
+    <None Include="Assets\GameSparks\Plugins\Metro\GameSparksRT.xml" />
+    <None Include="Assets\GameSparks\Plugins\WP8\GameSparks.XML" />
+    <None Include="Assets\GameSparks\README.txt" />
+    <None Include="Assets\GameSparks\link.xml" />
+    <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\README.txt" />
+    <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

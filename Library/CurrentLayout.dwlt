@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 711, y: 471}
   m_MaxSize: {x: 18006, y: 14021}
   vertical: 0
-  controlID: 1571
+  controlID: 100
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 342}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 1572
+  controlID: 137
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 471}
   m_MaxSize: {x: 10004, y: 14021}
   vertical: 1
-  controlID: 1594
+  controlID: 101
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -517,9 +517,9 @@ MonoBehaviour:
     height: 335
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b6a5ffff
-    m_LastClickedID: -23114
-    m_ExpandedIDs: ba98ffffb6a5ffffc8fbffff00000000
+    m_SelectedIDs: 7e510000
+    m_LastClickedID: 20862
+    m_ExpandedIDs: 68fdfdff5400feffb600feff4411feff3c5ffeff1270feff9876feff9a76feff5297feff78affeffdcb8feff12fdfeff8a24ffff02d4ffff18efffffc8fbffff0000000026480000a64c0000c24c00008a51000036530000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -579,7 +579,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts/GameScripts
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders:
@@ -616,7 +616,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 52}
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: 000000003e2500007a2500009e25000076260000942600009a260000a0260000ac260000b226000000270000322a0000342a0000362a0000382a00003a2a00003c2a00003e2a0000
