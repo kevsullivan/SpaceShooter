@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
     
     private void Start()
     {
+        GameManager.instance.SpawnActiveShip();
         StartCoroutine(SpawnWaves());
     }
 

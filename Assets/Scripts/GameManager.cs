@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     // Game status bools
-    public bool paused, gameOver, restart;
+    public bool inGame, paused, gameOver, restart;
 
     public int startLives;
 
@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour {
 
     // Making public to test spawn time;
     public float waitOnRespawn;
+
+    // Ship selection logic
+    // TODO: In future ship default should be saved across sessions.4
+    public GameObject[] ships;
+    public GameObject defaultShip;
+    private GameObject activeShip;
 
     // Use this for initialization
     void Awake()
@@ -62,6 +68,34 @@ public class GameManager : MonoBehaviour {
         gameOverText.text = "";
         livesText.text = "";
         scoreText.text = "";
+        activeShip = defaultShip;
+    }
+
+    // Spawns the active (selected) ship - call this from level controllers
+    public void SpawnActiveShip()
+    {
+        activeShip.SetActive(true);
+    }
+
+    public void DisableActiveShip()
+    {
+        activeShip.SetActive(false);
+    }
+
+    public void ChangeShip(GameObject selectedShip)
+    {
+        if (activeShip == selectedShip)
+        {
+            // Do nothing if already actvie (don't need active context flickers)
+            return;
+        }
+        if (inGame)
+        {
+            // If in game a ship is already active so disable it and enabled the new selection.
+            activeShip.SetActive(false);
+            selectedShip.SetActive(true);
+        }
+        activeShip = selectedShip;
     }
 
     public void HandleMenu()
@@ -122,6 +156,8 @@ public class GameManager : MonoBehaviour {
 
     public void BackToStart()
     {
+        inGame = false;
+        DisableActiveShip();
         Time.timeScale = 1;
         paused = false;
         // Going back to start screen so don't need GUI text / player attributes etc.
@@ -131,6 +167,10 @@ public class GameManager : MonoBehaviour {
 
     public void PlayerKilled()
     {
+        // Pretend ship destroyed
+        activeShip.SetActive(false);
+        // Put ship back at origin for new life/level
+        activeShip.transform.position = new Vector3(0, 0, 0);
         // Check players amount of lives to decided on ending game or restarting level.
         if (lives == 0)
         {

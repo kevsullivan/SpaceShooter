@@ -27,11 +27,14 @@ public class DestroyByContact : MonoBehaviour {
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
             GameManager.instance.PlayerKilled();
         }
+        else
+        {
+            // Destroy what hit the game object
+            Destroy(other.gameObject);
+        }
             
         // TODO: Player gets score if killed by object (do I want this mechanic?)
         GameManager.instance.AddScore(scoreValue);
-        // Destroy what hit the game object
-        Destroy(other.gameObject);
         // Destroy the game object itself (script attached to obstacles)
         Destroy(gameObject);
     }

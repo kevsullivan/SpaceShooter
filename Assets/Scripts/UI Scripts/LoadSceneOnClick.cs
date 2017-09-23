@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneOnClick : MonoBehaviour {
 
-    // Standard Load scene by index passed from unity
+    // Standard Load scene by index passed from unity (this is for loading into game levels)
+    // Use `LoadByIndexPaused` if returning to start screen scene.
     public void LoadByIndex(int sceneIndex)
     {
+        GameManager.instance.inGame = true;
+        GameManager.instance.SpawnActiveShip();
         GameManager.instance.UpdateLives();
         GameManager.instance.UpdateScore();
         SceneManager.LoadScene(sceneIndex);
