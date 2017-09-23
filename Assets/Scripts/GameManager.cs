@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     // Game status bools
-    public bool inGame, paused, gameOver, restart;
+    public bool inGame, paused, destroyed, gameOver, restart;
 
     public int startLives;
 
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
     public GUIText scoreText;
     public GUIText restartText;
     public GUIText gameOverText;
+    public GUIText respawnTimerText;
     public GUIText livesText;
     private string gameOverMessage = "Game Over!";
 
@@ -27,7 +28,8 @@ public class GameManager : MonoBehaviour {
     private int score;
 
     // Making public to test spawn time;
-    public float waitOnRespawn;
+    public int waitOnRespawn;
+    private int countdown;
 
     // Ship selection logic
     // TODO: In future ship default should be saved across sessions.4
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour {
     public void Start()
     {
         // TODO: Confirm need for instantiating int value (does it not default to 0?)
+        activeShip = defaultShip;
         SetDefaults();
     }
 
@@ -63,13 +66,14 @@ public class GameManager : MonoBehaviour {
     {
         score = 0;
         lives = startLives;
+        destroyed = false;
         gameOver = false;
         restart = false;
         restartText.text = "";
         gameOverText.text = "";
+        respawnTimerText.text = "";
         livesText.text = "";
         scoreText.text = "";
-        activeShip = defaultShip;
     }
 
     // Spawns the active (selected) ship - call this from level controllers
@@ -97,8 +101,11 @@ public class GameManager : MonoBehaviour {
             // previously active ship was.
             selectedShip.transform.position = activeShip.transform.position;
             selectedShip.transform.rotation = activeShip.transform.rotation;
-            activeShip.SetActive(false);
-            selectedShip.SetActive(true);
+            if (!destroyed)
+            {
+                activeShip.SetActive(false);
+                selectedShip.SetActive(true);
+            }
         }
         activeShip = selectedShip;
     }
@@ -133,15 +140,15 @@ public class GameManager : MonoBehaviour {
 
     public void PauseGame()
     {
-        Debug.Log(string.Format("Number of child objects: {0}", menuCanvas.transform.childCount));
         Time.timeScale = 0;
         mainMenu.SetActive(true);
         paused = true;
-        if (gameOver)
+        if (gameOver || destroyed)
         {
             // Little bit of logic to clean up UI when
-            // open menu and "Game Over!" message is on screen
+            // open menu and "Game Over!"/Countdown timer message is on screen
             gameOverText.text = "";
+            respawnTimerText.text = "";
         }
         //Disable scripts that still work while timescale is set to 0
     }
@@ -149,13 +156,21 @@ public class GameManager : MonoBehaviour {
     public void ContinueGame()
     {
         Time.timeScale = 1;
-        mainMenu.SetActive(false);
+        // Disable all child panels in the main menu canvas (since we could be in children of children etc.)
+        foreach (Transform transform in menuCanvas.transform)
+        {
+            transform.gameObject.SetActive(false);
+        }
         paused = false;
         if (gameOver)
         {
             // If game is over, redisplay the game over text when closing
             // menu.
             gameOverText.text = gameOverMessage;
+        }
+        if (destroyed)
+        {
+            respawnTimerText.text = countdown.ToString();
         }
         //enable the scripts again
     }
@@ -174,6 +189,7 @@ public class GameManager : MonoBehaviour {
     public void PlayerKilled()
     {
         // Pretend ship destroyed
+        destroyed = true;
         activeShip.SetActive(false);
         // Put ship back at origin for new life/level
         activeShip.transform.position = new Vector3(0, 0, 0);
@@ -209,8 +225,16 @@ public class GameManager : MonoBehaviour {
         else
         {
             // If restarting on Death (automatic) wait a few seconds
-            yield return new WaitForSeconds(waitOnRespawn);
+            countdown = waitOnRespawn;
+            // Hacky way to countdown our coroutine to the player.
+            while (countdown > 0)
+            {
+                respawnTimerText.text = countdown.ToString();
+                yield return new WaitForSeconds(1.0f);
+                countdown--;
+            }
         }
+        respawnTimerText.text = "";
         // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
         SceneManager.LoadScene("SpaceShooter");
     }

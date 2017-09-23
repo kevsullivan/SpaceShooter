@@ -13,7 +13,7 @@ public class StartResumeSwitch : MonoBehaviour
 
     public void Start()
     {
-        sceneSwitcher = new LoadSceneOnClick();
+        sceneSwitcher = gameObject.AddComponent<LoadSceneOnClick>();
         Button btn = button.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
     }
