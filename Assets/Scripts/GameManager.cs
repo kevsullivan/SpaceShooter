@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public GameObject mainMenu;
+    public GameObject menuCanvas;
     public static GameManager instance = null;
 
     // Game status bools
@@ -92,6 +93,10 @@ public class GameManager : MonoBehaviour {
         if (inGame)
         {
             // If in game a ship is already active so disable it and enabled the new selection.
+            // Also need to update the newly activated ship transform position to put it where the
+            // previously active ship was.
+            selectedShip.transform.position = activeShip.transform.position;
+            selectedShip.transform.rotation = activeShip.transform.rotation;
             activeShip.SetActive(false);
             selectedShip.SetActive(true);
         }
@@ -128,6 +133,7 @@ public class GameManager : MonoBehaviour {
 
     public void PauseGame()
     {
+        Debug.Log(string.Format("Number of child objects: {0}", menuCanvas.transform.childCount));
         Time.timeScale = 0;
         mainMenu.SetActive(true);
         paused = true;
