@@ -9,13 +9,12 @@ public class LoadSceneOnClick : MonoBehaviour {
     // Use `LoadByIndexPaused` if returning to start screen scene.
     public void LoadByIndex(int sceneIndex)
     {
-        GameManager.instance.inGame = true;
-        GameManager.instance.SpawnActiveShip();
         GameManager.instance.UpdateLives();
         GameManager.instance.UpdateScore();
         SceneManager.LoadScene(sceneIndex);
+        GameManager.instance.SpawnActiveShip();
     }
-
+    
     // Loads scene by index passed from Unity but handles logic specific to being in
     // a paused game context (turning off menu etc.)
     public void LoadByIndexPaused(int sceneIndex)

@@ -11,7 +11,7 @@ public class Boundary
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
-    public float speed;
+    public float manSpeed, autoSpeed;
     public float tilt;
     public Boundary boundary;
     
@@ -30,31 +30,51 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Executed before updated the frame, every frame
+    // Do automatic player controls here.
     private void Update()
     {
-        // Only shoot if:
-        // 1) The fire button is pressed
-        // 2) Enough time has elapsed since last shot fired
-        // 3) Time.timescale isn't 0 (i.e the game is not paused)
-        // TODO: Time.timescale is GameController Logic - perhaps could pull paused info from there
-        if (Input.GetButton("Fire1") && Time.time > nextFire && Time.timeScale != 0)
+        // Player is active but not enabled until load scenes are marked as completed
+        if (GameManager.instance.inGame)
         {
-            nextFire = Time.time + fireDelta;
-            Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
-            // Pass reference to sound manager to play our sound effect
-            SoundManager.instance.PlayEffects(audioSource);
+            // Only shoot if:
+            // 1) The fire button is pressed
+            // 2) Enough time has elapsed since last shot fired
+            // 3) Time.timescale isn't 0 (i.e the game is not paused)
+            // TODO: Time.timescale is GameController Logic - perhaps could pull paused info from there
+            if (Input.GetButton("Fire1") && Time.time > nextFire && Time.timeScale != 0)
+            {
+                nextFire = Time.time + fireDelta;
+                Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
+                // Pass reference to sound manager to play our sound effect
+                SoundManager.instance.PlayEffects(audioSource);
+            }
+
+            // Give the player a constant velocity forward
+            rb.position += rb.transform.forward * Time.deltaTime * autoSpeed;
+            ClampPlayer();
+
         }
     }
 
     // Called automatically by unity before each physiscs step
+    // Do manualy player controls here.
     public void FixedUpdate()
     {
-        float moveHorizonatal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        // Player is active but not enabled until load scenes are marked as completed
+        if (GameManager.instance.inGame)
+        {
+            float moveHorizonatal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizonatal, 0.0f, moveVertical);
-        rb.velocity = movement * speed;
+            Vector3 movement = new Vector3(moveHorizonatal, 0.0f, moveVertical);
+            rb.velocity = movement * manSpeed;
 
+            ClampPlayer();
+        }
+    }
+
+    private void ClampPlayer()
+    {
         // Clamp player rb within the screen using current position and set boundaries
         rb.position = new Vector3(
             Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),

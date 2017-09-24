@@ -24,7 +24,19 @@ public class GameController : MonoBehaviour {
     private void Start()
     {
         GameManager.instance.SpawnActiveShip();
-        StartCoroutine(SpawnWaves());
+        // Call back coroutine logic to load player into level before starting gameplay.
+        StartCoroutine(GameManager.instance.MoveIntoScene(finished =>
+        {
+            if (finished)
+            {
+                Debug.Log("Finished Load In Coroutine");
+                StartCoroutine(Level1Logic());
+            }
+            else
+            {
+                Debug.Log("Got unexpected call back from coroutine");
+            }
+        }));
     }
 
     private void Update()
@@ -44,7 +56,7 @@ public class GameController : MonoBehaviour {
     }
 
     // Co-routine function for spawning waves of "hazard" (Asteroids)
-    public IEnumerator SpawnWaves()
+    public IEnumerator Level1Logic()
     {
         yield return new WaitForSeconds(startWait);
         // Game is an infinite runner (keep spawning till dead)

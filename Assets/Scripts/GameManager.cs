@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour {
     // Player attributes
     private int lives;
     private int score;
+
+    public Transform startPosition;
+    public float spawnInSpeed;
 
     // Making public to test spawn time;
     public int waitOnRespawn;
@@ -74,6 +78,7 @@ public class GameManager : MonoBehaviour {
         respawnTimerText.text = "";
         livesText.text = "";
         scoreText.text = "";
+        activeShip.transform.position = startPosition.position;
     }
 
     // Spawns the active (selected) ship - call this from level controllers
@@ -85,6 +90,23 @@ public class GameManager : MonoBehaviour {
     public void DisableActiveShip()
     {
         activeShip.SetActive(false);
+    }
+
+    public IEnumerator MoveIntoScene(System.Action<bool> finished)
+    {
+        Vector3 start = activeShip.transform.position;
+        Vector3 target = new Vector3(0.0f, 0.0f, 0.0f);
+        float step = (spawnInSpeed / (start - target).magnitude) * Time.fixedDeltaTime;
+        float t = 0;
+        while (t <= 1.0f)
+        {
+            t += step; // Goes from 0 to 1, incrementing by step each time
+            activeShip.transform.position = Vector3.Lerp(start, target, t); // Move objectToMove closer to b
+            yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
+        }
+        activeShip.transform.position = target;
+        inGame = true;
+        finished(inGame);
     }
 
     public void ChangeShip(GameObject selectedShip)
