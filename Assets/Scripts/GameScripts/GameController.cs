@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
         {
             if (finished)
             {
-                StartCoroutine(Level1Logic());
+                StartCoroutine(LevelLogic());
             }
             else
             {
@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour {
     }
 
     // Co-routine function for spawning waves of "hazard" (Asteroids)
-    public IEnumerator Level1Logic()
+    public IEnumerator LevelLogic()
     {
         yield return new WaitForSeconds(startWait);
         // Game is an infinite runner (keep spawning till dead)

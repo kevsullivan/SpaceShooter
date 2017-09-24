@@ -99,7 +99,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ConfigControl.cs" />
     <Compile Include="Assets\GameSparks\GameSparksRTUnity.cs" />
     <Compile Include="Assets\GameSparks\GameSparksSettings.cs" />
     <Compile Include="Assets\GameSparks\GameSparksUnity.cs" />
@@ -148,6 +147,7 @@
     <Compile Include="Assets\Scripts\GameSparks\RegisterPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\ConfigControl.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\ExitOnClick.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\LoadSceneOnClick.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\MasterVolumeControl.cs" />
@@ -155,6 +155,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\SelectOnInput.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\StartResumeSwitch.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\UnpauseGame.cs" />
+    <Compile Include="Assets\Tazo_fx\Script\BillBoard.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_BGScroller.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByBoundary.cs" />
     <Compile Include="Assets\_Complete-Game\Scripts\Done_DestroyByContact.cs" />

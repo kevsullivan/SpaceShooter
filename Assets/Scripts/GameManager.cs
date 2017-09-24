@@ -28,8 +28,9 @@ public class GameManager : MonoBehaviour {
     private string gameOverMessage = "Game Over!";
 
     // Player attributes
-    private int lives;
+    public int lives;
     private int score;
+    public int health;
 
     public Transform startPosition;
     public float spawnInSpeed;
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour {
     public void SetDefaults()
     {
         score = 0;
+        health = 100;
         lives = startLives;
         destroyed = false;
         gameOver = false;
@@ -165,6 +167,12 @@ public class GameManager : MonoBehaviour {
     public void UpdateLives()
     {
         livesText.text = "Lives: " + lives;
+    }
+
+    public void AddLife(int livesToAdd)
+    {
+        lives += livesToAdd;
+        UpdateLives();
     }
 
     public void AddScore(int newScoreValue)

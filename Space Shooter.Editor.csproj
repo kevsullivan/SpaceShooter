@@ -139,17 +139,20 @@
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>Library\FacebookSDK\Facebook.Unity.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle_GameSparks">
+      <HintPath>Assets\GameSparks\Plugins\BouncyCastle_GameSparks.dll</HintPath>
+    </Reference>
+    <Reference Include="GameSparks.Api">
+      <HintPath>Assets\GameSparks\Plugins\GameSparks.Api.dll</HintPath>
+    </Reference>
     <Reference Include="GameSparks">
       <HintPath>Assets\GameSparks\Plugins\GameSparks.dll</HintPath>
     </Reference>
     <Reference Include="GameSparksRT">
       <HintPath>Assets\GameSparks\Plugins\GameSparksRT.dll</HintPath>
     </Reference>
-    <Reference Include="GameSparks.Api">
-      <HintPath>Assets\GameSparks\Plugins\GameSparks.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="BouncyCastle_GameSparks">
-      <HintPath>Assets\GameSparks\Plugins\BouncyCastle_GameSparks.dll</HintPath>
+    <Reference Include="Assembly-UnityScript">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
