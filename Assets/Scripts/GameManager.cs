@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour {
     // Game status bools
     public bool inGame, paused, destroyed, gameOver, restart;
 
+    // Config bools
+    public bool loadScenes;
+
     public int startLives;
 
     // Cross Game GUI Options
@@ -94,17 +97,27 @@ public class GameManager : MonoBehaviour {
 
     public IEnumerator MoveIntoScene(System.Action<bool> finished)
     {
+
+        Vector3 origin = new Vector3(0.0f, 0.0f, 0.0f);
+        // Check if load scenes are enabled, if not send call back and break coroutine
+        if (!loadScenes)
+        {
+            activeShip.transform.position = origin;
+            inGame = true;
+            finished(inGame);
+            yield break;
+        }
+        
         Vector3 start = activeShip.transform.position;
-        Vector3 target = new Vector3(0.0f, 0.0f, 0.0f);
-        float step = (spawnInSpeed / (start - target).magnitude) * Time.fixedDeltaTime;
+        float step = (spawnInSpeed / (start - origin).magnitude) * Time.fixedDeltaTime;
         float t = 0;
         while (t <= 1.0f)
         {
             t += step; // Goes from 0 to 1, incrementing by step each time
-            activeShip.transform.position = Vector3.Lerp(start, target, t); // Move objectToMove closer to b
+            activeShip.transform.position = Vector3.Lerp(start, origin, t); // Move objectToMove closer to b
             yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
         }
-        activeShip.transform.position = target;
+        activeShip.transform.position = origin;
         inGame = true;
         finished(inGame);
     }

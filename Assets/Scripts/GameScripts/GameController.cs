@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour {
         {
             if (finished)
             {
-                Debug.Log("Finished Load In Coroutine");
                 StartCoroutine(Level1Logic());
             }
             else

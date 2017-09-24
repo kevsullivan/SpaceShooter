@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ConfigControl.cs" />
     <Compile Include="Assets\GameSparks\GameSparksRTUnity.cs" />
     <Compile Include="Assets\GameSparks\GameSparksSettings.cs" />
     <Compile Include="Assets\GameSparks\GameSparksUnity.cs" />
