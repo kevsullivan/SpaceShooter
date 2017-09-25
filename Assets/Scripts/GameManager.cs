@@ -25,12 +25,15 @@ public class GameManager : MonoBehaviour {
     public GUIText gameOverText;
     public GUIText respawnTimerText;
     public GUIText livesText;
+    public GUIText healthText;
     private string gameOverMessage = "Game Over!";
 
     // Player attributes
     public int lives;
+    public int startHealth;
     private int score;
-    public int health;
+    private int health;
+    
 
     public Transform startPosition;
     public float spawnInSpeed;
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour {
         respawnTimerText.text = "";
         livesText.text = "";
         scoreText.text = "";
+        healthText.text = "";
         activeShip.transform.position = startPosition.position;
     }
 
@@ -169,10 +173,21 @@ public class GameManager : MonoBehaviour {
         livesText.text = "Lives: " + lives;
     }
 
+    public void UpdateHealth()
+    {
+        healthText.text = "Health: " + health;
+    }
+
     public void AddLife(int livesToAdd)
     {
         lives += livesToAdd;
         UpdateLives();
+    }
+
+    public void AddHealth(int healthToAdd)
+    {
+        health = Mathf.Min((health + healthToAdd), 100);
+        UpdateHealth();
     }
 
     public void AddScore(int newScoreValue)
@@ -229,6 +244,18 @@ public class GameManager : MonoBehaviour {
         //enable the scripts again
     }
 
+    // Subtracts player health on hit and returns whether they died or not.
+    public bool PlayerHit(int damageVal)
+    {
+        health = Mathf.Max((health - damageVal), 0);
+        UpdateHealth();
+        if (health == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void PlayerKilled()
     {
         // Pretend ship destroyed
@@ -258,12 +285,15 @@ public class GameManager : MonoBehaviour {
 
     public IEnumerator RestartLevel()
     {
+        Debug.Log("Restarting Level");
         // When restarting from gameOver context - need to reset attributes/gui text etc.
         if (gameOver)
         {
+            Debug.Log("Game is over");
             SetDefaults();
             UpdateLives();
             UpdateScore();
+            UpdateHealth();
         }
         else
         {
@@ -278,6 +308,9 @@ public class GameManager : MonoBehaviour {
             }
         }
         respawnTimerText.text = "";
+        // Reset health to 0 on new life
+        health = startHealth;
+        UpdateHealth();
         // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
         SceneManager.LoadScene("SpaceShooter");
     }

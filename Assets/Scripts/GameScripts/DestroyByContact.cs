@@ -6,9 +6,12 @@ public class DestroyByContact : MonoBehaviour {
 
     public GameObject explosion;
     public GameObject playerExplosion;
+    private bool killDamage;
     public bool isPickup;
     public int scoreValue;
+    public int damageValue;
     public int lifeValue;
+    public int healthValue;
     
     void OnTriggerEnter(Collider other)
     {
@@ -28,8 +31,13 @@ public class DestroyByContact : MonoBehaviour {
         {
             if (!isPickup)
             {
-                Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-                GameManager.instance.PlayerKilled();
+                // Handle player hit logic
+                killDamage = GameManager.instance.PlayerHit(damageValue);
+                if (killDamage)
+                {
+                    Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+                    GameManager.instance.PlayerKilled();
+                }
             }
         }
         else
@@ -46,8 +54,11 @@ public class DestroyByContact : MonoBehaviour {
         }
         if (lifeValue != 0)
         {
-            // TODO: Player gets score if killed by object (do I want this mechanic?)
             GameManager.instance.AddLife(lifeValue);
+        }
+        if (healthValue != 0)
+        {
+            GameManager.instance.AddHealth(healthValue);
         }
         // Destroy the game object itself (script attached to obstacles)
         Destroy(gameObject);

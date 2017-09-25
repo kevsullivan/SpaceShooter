@@ -11,6 +11,7 @@ public class LoadSceneOnClick : MonoBehaviour {
     {
         GameManager.instance.UpdateLives();
         GameManager.instance.UpdateScore();
+        GameManager.instance.UpdateHealth();
         SceneManager.LoadScene(sceneIndex);
         GameManager.instance.SpawnActiveShip();
     }
