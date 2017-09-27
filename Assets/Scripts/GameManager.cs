@@ -113,8 +113,9 @@ public class GameManager : MonoBehaviour {
             finished(inGame);
             yield break;
         }
-        
-        Vector3 start = activeShip.transform.position;
+        // Load scenes active - ensure ship is in starting move in location
+        Vector3 start = new Vector3(0.0f, 0.0f, -4.5f);
+        activeShip.transform.position = start;
         float step = (spawnInSpeed / (start - origin).magnitude) * Time.fixedDeltaTime;
         float t = 0;
         while (t <= 1.0f)
@@ -226,7 +227,7 @@ public class GameManager : MonoBehaviour {
             // menu.
             gameOverText.text = gameOverMessage;
         }
-        if (destroyed)
+        if (destroyed && !gameOver)
         {
             respawnTimerText.text = countdown.ToString();
         }

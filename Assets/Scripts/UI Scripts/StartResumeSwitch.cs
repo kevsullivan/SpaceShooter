@@ -33,12 +33,17 @@ public class StartResumeSwitch : MonoBehaviour
         mainMenu.SetActive(false);
         if (GameManager.instance.inGame)
         {
+            // Already in game so `resume` is active, just continue game on click
             GameManager.instance.ContinueGame();
         }
         else
         {
+            // Button clicked outside of game, i.e. start screen 
+            // so set in game context and activate return to start screen button
             InGameContext();
             startScreenButton.SetActive(true);
+
+            // TODO: Loads a specific level, this should be configuratble (for load games etc.)
             sceneSwitcher.LoadByIndex(1);
         }
     }
